@@ -1,8 +1,6 @@
 # This is my package queueable-bulk-actions
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/bytexr/filament-queueable-bulk-actions.svg?style=flat-square)](https://packagist.org/packages/bytexr/queueable-bulk-actions)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/bytexr/filament-queueable-bulk-actions/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/bytexr/queueable-bulk-actions/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/bytexr/filament-queueable-bulk-actions/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/bytexr/queueable-bulk-actions/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/bytexr/filament-queueable-bulk-actions.svg?style=flat-square)](https://packagist.org/packages/bytexr/queueable-bulk-actions)
 
 
