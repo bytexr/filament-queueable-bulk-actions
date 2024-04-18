@@ -1,7 +1,7 @@
 # This is my package queueable-bulk-actions
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/bytexr/filament-queueable-bulk-actions.svg?style=flat-square)](https://packagist.org/packages/bytexr/queueable-bulk-actions)
-[![Total Downloads](https://img.shields.io/packagist/dt/bytexr/filament-queueable-bulk-actions.svg?style=flat-square)](https://packagist.org/packages/bytexr/queueable-bulk-actions)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/bytexr/filament-queueable-bulk-actions.svg?style=flat-square)](https://packagist.org/packages/bytexr/filament-queueable-bulk-actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/bytexr/filament-queueable-bulk-actions.svg?style=flat-square)](https://packagist.org/packages/bytexr/filament-queueable-bulk-actions)
 
 
 This Filament plugin simplifies managing bulk operations asynchronously in a queue. It provides tracking and status updates for tasks, while supporting both action calls and job dispatches. Excellent for bulk data updates and tasks with Filament & Livewire support for real-time notifications.
