@@ -1,42 +1,35 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Bytexr\QueueableBulkActions;
 
-use Filament\Support\Assets\AlpineComponent;
+use Bytexr\QueueableBulkActions\Livewire\BulkActionNotification;
+use Bytexr\QueueableBulkActions\Livewire\BulkActionNotifications;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
-use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class QueueableBulkActionsServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'queueable-bulk-actions';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'queueable-bulk-actions';
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package->name(static::$name)
-            ->hasCommands($this->getCommands())
+            ->runsMigrations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('bytexr/filament-queueable-bulk-actions');
             });
 
         $configFileName = $package->shortName();
@@ -64,6 +57,9 @@ class SkeletonServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        Livewire::component('queueable-bulk-actions.bulk-action-notifications', BulkActionNotifications::class);
+        Livewire::component('queueable-bulk-actions.bulk-action-notification', BulkActionNotification::class);
+
         // Asset Registration
         FilamentAsset::register(
             $this->getAssets(),
@@ -82,18 +78,15 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
+                    $file->getRealPath() => base_path("stubs/queueable-bulk-actions/{$file->getFilename()}"),
+                ], 'queueable-bulk-actions-stubs');
             }
         }
-
-        // Testing
-        Testable::mixin(new TestsSkeleton());
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'bytexr/queueable-bulk-actions';
     }
 
     /**
@@ -102,19 +95,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
-        ];
-    }
-
-    /**
-     * @return array<class-string>
-     */
-    protected function getCommands(): array
-    {
-        return [
-            SkeletonCommand::class,
+            Css::make('queueable-bulk-actions-styles', __DIR__ . '/../resources/dist/queueable-bulk-actions.css'),
         ];
     }
 
@@ -148,7 +129,8 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_skeleton_table',
+            '2024_04_17_092437_create_bulk_actions_table',
+            '2024_04_17_101411_create_bulk_action_records_table',
         ];
     }
 }

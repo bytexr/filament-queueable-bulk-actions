@@ -1,28 +1,28 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "bytexr/filament-queueable-bulk-actions",
+    "description": "This Filament plugin simplifies managing bulk operations asynchronously in a queue. It provides tracking and status updates for tasks, while supporting both action calls and job dispatches. Excellent for bulk data updates and tasks with Filament & Livewire support for real-time notifications.",
     "keywords": [
-        ":vendor_name",
+        "bytexr",
         "laravel",
-        ":package_slug"
+        "filament",
+        "queueable-bulk-actions"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/bytexr/queueable-bulk-actions",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/bytexr/queueable-bulk-actions/issues",
+        "source": "https://github.com/bytexr/queueable-bulk-actions"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Eddie Rusinskas",
+            "email": "info@imphus.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
         "filament/tables": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
@@ -41,13 +41,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Bytexr\\QueueableBulkActions\\": "src/",
+            "Bytexr\\QueueableBulkActions\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Bytexr\\QueueableBulkActions\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,10 +67,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Bytexr\\QueueableBulkActions\\QueueableBulkActionsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "QueueableBulkActions": "Bytexr\\QueueableBulkActions\\Facades\\QueueableBulkActions"
             }
         }
     },
