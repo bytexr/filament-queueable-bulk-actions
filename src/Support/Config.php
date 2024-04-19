@@ -69,7 +69,7 @@ class Config
         return config('queueable-bulk-actions.resource');
     }
 
-    public static function colors(): string
+    public static function colors(): array
     {
         if (Config::isPluginRegister()) {
                 QueueableBulkActionsPlugin::get()->getColors() ?? config('queueable-bulk-actions.colors');
