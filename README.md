@@ -108,8 +108,8 @@ The notification is contextually aware and will only appear on the page where th
 
 Even after the task execution, all bulk action records are preserved for reference. They can readily be accessed via the `BulkActionResource`, ensuring continuity and availability of information when needed.
 
-![Bulk Action Notification](/resources/images/resource.png)
-![Bulk Action Notification](/resources/images/view-action.png)
+![Bulk Action Notification](https://raw.githubusercontent.com/bytexr/filament-queueable-bulk-actions/main/resources/images/resource.png)
+![Bulk Action Notification](https://raw.githubusercontent.com/bytexr/filament-queueable-bulk-actions/main/resources/images/view-action.png)
 
 ## Changelog
 
