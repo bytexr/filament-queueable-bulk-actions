@@ -4,6 +4,7 @@ namespace Bytexr\QueueableBulkActions\Livewire;
 
 use Bytexr\QueueableBulkActions\Enums\StatusEnum;
 use Bytexr\QueueableBulkActions\Models\BulkAction;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -24,7 +25,7 @@ class BulkActionNotification extends Component
 
     public function boot(): void
     {
-        $this->bulkAction = config('queueable-bulk-actions.models.bulk_action')::query()->findOrFail($this->bulkActionId);
+        $this->bulkAction = Config::bulkActionModel()::query()->findOrFail($this->bulkActionId);
         $records = $this->bulkAction->records->groupBy('status');
 
         $this->processedPercentage = round((($records->get(StatusEnum::FINISHED->value)?->count() ?? 0) + ($records->get(StatusEnum::FAILED->value)?->count() ?? 0)) / $this->bulkAction->total_records * 100, 1);

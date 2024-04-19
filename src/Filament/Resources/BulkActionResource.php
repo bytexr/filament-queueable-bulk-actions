@@ -4,6 +4,7 @@ namespace Bytexr\QueueableBulkActions\Filament\Resources;
 
 use Bytexr\QueueableBulkActions\Enums\StatusEnum;
 use Bytexr\QueueableBulkActions\Filament\Resources\BulkActionResource\Pages;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -14,7 +15,7 @@ class BulkActionResource extends Resource
 
     public static function getModel(): string
     {
-        return config('queueable-bulk-actions.models.bulk_action');
+        return Config::bulkActionModel();
     }
 
     public static function table(Table $table): Table
@@ -25,7 +26,7 @@ class BulkActionResource extends Resource
                     ->label('Action ID'),
                 TextColumn::make('name'),
                 TextColumn::make('status')
-                    ->color(fn ($state) => config('queueable-bulk-actions.colors.status.' . $state->value))
+                    ->color(fn ($state) => Config::color($state))
                     ->badge()
                     ->formatStateUsing(fn (StatusEnum $state) => $state->getLabel()),
                 TextColumn::make('message')->wrap()->placeholder('-'),

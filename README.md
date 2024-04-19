@@ -36,7 +36,36 @@ php artisan vendor:publish --tag="queueable-bulk-actions-views"
 
 ## Usage
 
+First you will need to register this plugin on your Filament panel
+
+```php
+use \Bytexr\QueueableBulkActions\QueueableBulkActionsPlugin;
+use Filament\View\PanelsRenderHook;
+\Bytexr\QueueableBulkActions\Enums\StatusEnum;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        ->plugins([
+            QueueableBulkActionsPlugin::make()
+                ->bulkActionModel(YourBulkActionModel::class) // (optional) - Allows you to register your own model which extends \Bytexr\QueueableBulkActions\Models\BulkAction
+                ->bulkActionRecordModel(YourBulkActionRecordModel::class) // (optional) - Allows you to register your own model for records which extends \Bytexr\QueueableBulkActions\Models\BulkActionRecord
+                ->renderHook(PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE) // (optional) - Allows you to change where notification is rendered [Default: PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE]
+                ->pollingInterval('5s') // (optional) - Allows you to change or disable polling interval, set to null to disable. [Default: 5s]
+                ->queue('redis', 'default')  // (optional) - Allows you to change which connection and queue should be used [Default: env('QUEUE_CONNECTION'), default]
+                ->resource(YourBulkActionResource::class) // (optional) - Allows you to change which resource should be used to display historical bulk actions
+                ->colors([
+                    StatusEnum::QUEUED->value => 'slate',
+                    StatusEnum::IN_PROGRESS->value => 'info',
+                    StatusEnum::FINISHED->value => 'success',
+                    StatusEnum::FAILED->value => 'danger',
+                ]), // (optional) - Allows you to change notification and badge colors used for statuses. Uses filament colors defined in panel provider. [Default: as show in method]
+        ]);
+}
+```
+
 To start leveraging the benefits of this package, you'll initially create a job tailored to manage your unique bulk action records. This specialized job should inherit from the `Bytexr\QueueableBulkActions\Jobs\BulkActionJob` class, enabling it to seamlessly employ the features of the package.
+
 ```php
 <?php
 

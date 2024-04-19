@@ -5,6 +5,7 @@ namespace Bytexr\QueueableBulkActions\Jobs;
 use Bytexr\QueueableBulkActions\Enums\StatusEnum;
 use Bytexr\QueueableBulkActions\Filament\Actions\ActionResponse;
 use Bytexr\QueueableBulkActions\Models\BulkActionRecord;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,8 +25,8 @@ abstract class BulkActionJob implements ShouldQueue
     public function __construct(
         protected BulkActionRecord $bulkActionRecord,
     ) {
-        $this->onConnection(config('queueable-bulk-actions.connection'));
-        $this->onQueue(config('queueable-bulk-actions.queue'));
+        $this->onConnection(Config::queueConnection());
+        $this->onQueue(Config::queueName());
     }
 
     public function handle(): void

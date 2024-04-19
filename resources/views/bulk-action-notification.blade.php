@@ -2,10 +2,10 @@
         'mb-4',
         'hidden' => $bulkAction->dismissed_at && !$isViewBulkActionPage
 ])
-        {{ config('queueable-bulk-actions.poll') ? 'wire:poll.' . config('queueable-bulk-actions.poll') : '' }}
+        {{ \Bytexr\QueueableBulkActions\Support\Config::pollingInterval() ? 'wire:poll.' . \Bytexr\QueueableBulkActions\Support\Config::pollingInterval(): '' }}
 >
     @php
-        $color = config('queueable-bulk-actions.colors.status.' . $bulkAction->status->value, 'slate');
+        $color = \Bytexr\QueueableBulkActions\Support\Config::color($bulkAction->status);
         $colorStyles = \Illuminate\Support\Arr::toCssStyles([
               \Filament\Support\get_color_css_variables(
               $color,
@@ -28,7 +28,7 @@
             <div class="flex w-full h-3 bg-white rounded-full overflow-hidden">
                 @foreach($groupedRecords as $status => $count)
                     @php
-                        $groupColor = config('queueable-bulk-actions.colors.status.' . $status, 'slate');
+                        $groupColor = \Bytexr\QueueableBulkActions\Support\Config::color($status);
                         $groupColorStyles = \Illuminate\Support\Arr::toCssStyles([
                           \Filament\Support\get_color_css_variables(
                           $groupColor,
@@ -63,8 +63,8 @@
                         }
                     }}
                 </span>
-                @if(!$isViewBulkActionPage && config('queueable-bulk-actions.resource'))
-                    <a href="{{ config('queueable-bulk-actions.resource')::getUrl('view', [$bulkAction]) }}"
+                @if(!$isViewBulkActionPage && \Bytexr\QueueableBulkActions\Support\Config::resource())
+                    <a href="{{\Bytexr\QueueableBulkActions\Support\Config::resource()::getUrl('view', [$bulkAction]) }}"
                        class="text-xs text-primary pt-1">View Details</a>
                 @endif
             </div>

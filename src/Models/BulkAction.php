@@ -5,6 +5,7 @@ namespace Bytexr\QueueableBulkActions\Models;
 use Bytexr\QueueableBulkActions\Enums\BulkActions\TypeEnum;
 use Bytexr\QueueableBulkActions\Enums\StatusEnum;
 use Bytexr\QueueableBulkActions\Models\Traits\HasStatus;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,12 +38,12 @@ class BulkAction extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
+        return $this->belongsTo(Config::bulkActionModel(), 'user_id');
     }
 
     public function records(): HasMany
     {
-        return $this->hasMany(config('queueable-bulk-actions.models.bulk_action_record'));
+        return $this->hasMany(Config::bulkActionRecordModel(), 'bulk_action_id');
     }
 
     public function updateIfFinished(): void

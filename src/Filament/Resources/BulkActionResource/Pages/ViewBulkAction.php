@@ -5,6 +5,7 @@ namespace Bytexr\QueueableBulkActions\Filament\Resources\BulkActionResource\Page
 use Bytexr\QueueableBulkActions\Enums\StatusEnum;
 use Bytexr\QueueableBulkActions\Filament\Resources\BulkActionResource;
 use Bytexr\QueueableBulkActions\Models\BulkActionRecord;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Actions\Action;
@@ -28,7 +29,7 @@ class ViewBulkAction extends ListRecords
 
     public function getModel(): string
     {
-        return config('queueable-bulk-actions.models.bulk_action_record');
+        return Config::bulkActionRecordModel();
     }
 
     public function getTitle(): string | Htmlable
@@ -43,7 +44,7 @@ class ViewBulkAction extends ListRecords
                 TextColumn::make('record')
                     ->getStateUsing(fn (BulkActionRecord $record) => $record->record->name ?? $record->record_id),
                 TextColumn::make('status')
-                    ->color(fn ($state) => config('queueable-bulk-actions.colors.status.' . $state->value))
+                    ->color(fn ($state) => Config::color($state))
                     ->badge()
                     ->formatStateUsing(fn (StatusEnum $state) => $state->getLabel()),
                 TextColumn::make('message')->wrap()->placeholder('-'),
@@ -71,7 +72,7 @@ class ViewBulkAction extends ListRecords
 
     protected function getTableQuery(): Builder
     {
-        return config('queueable-bulk-actions.models.bulk_action_record')::query()
+        return Config::bulkActionRecordModel()::query()
             ->with(['record'])
             ->where('bulk_action_id', $this->record->getKey())
             ->orderBy('status');

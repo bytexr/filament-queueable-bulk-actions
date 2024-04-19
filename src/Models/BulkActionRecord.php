@@ -4,6 +4,7 @@ namespace Bytexr\QueueableBulkActions\Models;
 
 use Bytexr\QueueableBulkActions\Enums\StatusEnum;
 use Bytexr\QueueableBulkActions\Models\Traits\HasStatus;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -28,7 +29,7 @@ class BulkActionRecord extends Model
 
     public function bulkAction(): BelongsTo
     {
-        return $this->belongsTo(config('queueable-bulk-actions.models.bulk_action'));
+        return $this->belongsTo(Config::bulkActionModel(), 'bulk_action_id');
     }
 
     public function record(): MorphTo

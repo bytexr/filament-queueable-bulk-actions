@@ -3,6 +3,7 @@
 namespace Bytexr\QueueableBulkActions\Livewire;
 
 use Bytexr\QueueableBulkActions\Enums\BulkActions\TypeEnum;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -20,7 +21,7 @@ class BulkActionNotifications extends Component
 
     public function boot(): void
     {
-        $this->bulkActions = config('queueable-bulk-actions.models.bulk_action')::query()
+        $this->bulkActions = Config::bulkActionModel()::query()
             ->where('type', TypeEnum::TABLE)
             ->where('user_id', Auth::user()->getKey())
             ->where('identifier', $this->identifier)

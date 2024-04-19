@@ -5,6 +5,7 @@ namespace Bytexr\QueueableBulkActions\Filament\Actions;
 use Bytexr\QueueableBulkActions\Enums\BulkActions\TypeEnum;
 use Bytexr\QueueableBulkActions\Jobs\BulkActionSetupJob;
 use Bytexr\QueueableBulkActions\Models\BulkAction;
+use Bytexr\QueueableBulkActions\Support\Config;
 use Closure;
 use Exception;
 use Filament\Pages\BasePage;
@@ -39,7 +40,7 @@ class QueueableBulkAction extends \Filament\Tables\Actions\BulkAction
 
     private function createBulkAction(string $identifier, int $totalRecords, array $data): BulkAction
     {
-        return config('queueable-bulk-actions.models.bulk_action')::query()->create([
+        return Config::bulkActionModel()::query()->create([
             'name' => $this->getLabel(),
             'type' => TypeEnum::TABLE,
             'identifier' => $identifier,
