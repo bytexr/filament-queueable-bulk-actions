@@ -13,6 +13,11 @@ class BulkActionResource extends Resource
 {
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('queueable-bulk-actions::resource.plural_label');
+    }
+
     public static function getModel(): string
     {
         return Config::bulkActionModel();

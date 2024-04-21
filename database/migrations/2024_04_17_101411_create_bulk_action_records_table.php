@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create(config('queueable-bulk-actions.tables.bulk_action_records'), function (Blueprint $table) {
             $table->id();
             $table->foreignId('bulk_action_id')->constrained(config('queueable-bulk-actions.tables.bulk_actions'))->cascadeOnDelete();
-            $table->unsignedBigInteger('record_id');
+            $table->uuid('record_id');
             $table->string('record_type');
             $table->index(['record_id', 'record_type']);
             $table->string('status')->default(StatusEnum::QUEUED->value);

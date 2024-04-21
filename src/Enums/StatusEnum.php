@@ -14,8 +14,6 @@ enum StatusEnum: string
 
     public function getLabel(): Stringable
     {
-        return Str::of($this->value)
-            ->replace('-', ' ')
-            ->ucfirst();
+        return Str::of(__('queueable-bulk-actions::status.' . $this->value));
     }
 }

@@ -57,9 +57,6 @@ class QueueableBulkActionsServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Livewire::component('queueable-bulk-actions.bulk-action-notifications', BulkActionNotifications::class);
-        Livewire::component('queueable-bulk-actions.bulk-action-notification', BulkActionNotification::class);
-
         // Asset Registration
         FilamentAsset::register(
             $this->getAssets(),
@@ -82,6 +79,9 @@ class QueueableBulkActionsServiceProvider extends PackageServiceProvider
                 ], 'queueable-bulk-actions-stubs');
             }
         }
+
+        Livewire::component('queueable-bulk-actions.bulk-action-notifications', BulkActionNotifications::class);
+        Livewire::component('queueable-bulk-actions.bulk-action-notification', BulkActionNotification::class);
     }
 
     protected function getAssetPackageName(): ?string
@@ -129,8 +129,8 @@ class QueueableBulkActionsServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            '2024_04_17_092437_create_bulk_actions_table',
-            '2024_04_17_101411_create_bulk_action_records_table',
+            'create_bulk_actions_table',
+            'create_bulk_action_records_table',
         ];
     }
 }
