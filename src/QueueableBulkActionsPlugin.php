@@ -39,13 +39,13 @@ class QueueableBulkActionsPlugin implements Plugin
     public function register(Panel $panel): void
     {
         FilamentView::registerRenderHook(
-            Config::renderHook(),
+            $this->getRenderHook(),
             fn(array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
         );
 
-        if (Config::resource() && Config::resource() == BulkActionResource::class) {
+        if ($this->getResource() && $this->getResource() == BulkActionResource::class) {
             $panel->resources([
-                Config::resource(),
+                $this->getResource(),
             ]);
         }
     }
