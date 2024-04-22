@@ -2,6 +2,7 @@
 
 namespace Bytexr\QueueableBulkActions;
 
+use Bytexr\QueueableBulkActions\Filament\Resources\BulkActionResource;
 use Bytexr\QueueableBulkActions\Support\Config;
 use Closure;
 use Filament\Contracts\Plugin;
@@ -14,21 +15,21 @@ class QueueableBulkActionsPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected string | Closure | null $bulkActionModel = null;
+    protected string|Closure|null $bulkActionModel = null;
 
-    protected string | Closure | null $bulkActionRecordModel = null;
+    protected string|Closure|null $bulkActionRecordModel = null;
 
-    protected string | Closure | null $renderHook = null;
+    protected string|Closure|null $renderHook = null;
 
-    protected string | Closure | null $pollingInterval = null;
+    protected string|Closure|null $pollingInterval = null;
 
-    protected string | Closure | null $queueConnection = null;
+    protected string|Closure|null $queueConnection = null;
 
-    protected string | Closure | null $queueName = null;
+    protected string|Closure|null $queueName = null;
 
-    protected string | Closure | null $resource = null;
+    protected string|Closure|null $resource = null;
 
-    protected array | Closure | null $colors = null;
+    protected array|Closure|null $colors = null;
 
     public function getId(): string
     {
@@ -39,10 +40,10 @@ class QueueableBulkActionsPlugin implements Plugin
     {
         FilamentView::registerRenderHook(
             Config::renderHook(),
-            fn (array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
+            fn(array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
         );
 
-        if (Config::resource()) {
+        if (Config::resource() && Config::resource() instanceof BulkActionResource) {
             $panel->resources([
                 Config::resource(),
             ]);
@@ -63,7 +64,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return filament(app(static::class)->getId());
     }
 
-    public function bulkActionRecordTable(string | Closure $table): static
+    public function bulkActionRecordTable(string|Closure $table): static
     {
         $this->bulkActionRecordTable = $table;
 
@@ -75,7 +76,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->bulkActionRecordTable);
     }
 
-    public function bulkActionModel(string | Closure $model): static
+    public function bulkActionModel(string|Closure $model): static
     {
         $this->bulkActionModel = $model;
 
@@ -87,7 +88,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->bulkActionModel);
     }
 
-    public function bulkActionRecordModel(string | Closure $model): static
+    public function bulkActionRecordModel(string|Closure $model): static
     {
         $this->bulkActionRecordModel = $model;
 
@@ -99,7 +100,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->bulkActionRecordModel);
     }
 
-    public function renderHook(string | Closure $renderHook): static
+    public function renderHook(string|Closure $renderHook): static
     {
         $this->renderHook = $renderHook;
 
@@ -111,7 +112,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->renderHook);
     }
 
-    public function pollingInterval(string | Closure $pollingInterval): static
+    public function pollingInterval(string|Closure $pollingInterval): static
     {
         $this->pollingInterval = $pollingInterval;
 
@@ -123,7 +124,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->pollingInterval);
     }
 
-    public function queue(string | Closure $connection, string | Closure $queue = 'default'): static
+    public function queue(string|Closure $connection, string|Closure $queue = 'default'): static
     {
         $this->queueConnection = $connection;
         $this->queueName = $queue;
@@ -131,7 +132,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this;
     }
 
-    public function queueConnection(string | Closure $queueConnection): static
+    public function queueConnection(string|Closure $queueConnection): static
     {
         $this->queueConnection = $queueConnection;
 
@@ -143,7 +144,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->queueConnection);
     }
 
-    public function queueName(string | Closure $queueName): static
+    public function queueName(string|Closure $queueName): static
     {
         $this->queueName = $queueName;
 
@@ -155,7 +156,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->queueName);
     }
 
-    public function resource(string | Closure $resource): static
+    public function resource(string|Closure $resource): static
     {
         $this->resource = $resource;
 
@@ -167,7 +168,7 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->resource);
     }
 
-    public function colors(array | Closure $colors): static
+    public function colors(array|Closure $colors): static
     {
         $this->colors = $colors;
 
