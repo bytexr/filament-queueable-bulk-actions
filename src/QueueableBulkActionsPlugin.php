@@ -3,7 +3,6 @@
 namespace Bytexr\QueueableBulkActions;
 
 use Bytexr\QueueableBulkActions\Filament\Resources\BulkActionResource;
-use Bytexr\QueueableBulkActions\Support\Config;
 use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
@@ -15,21 +14,33 @@ class QueueableBulkActionsPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected string|Closure|null $bulkActionModel = null;
+    protected string | Closure $bulkActionModel;
 
-    protected string|Closure|null $bulkActionRecordModel = null;
+    protected string | Closure $bulkActionRecordModel;
 
-    protected string|Closure|null $renderHook = null;
+    protected string | Closure $renderHook;
 
-    protected string|Closure|null $pollingInterval = null;
+    protected string | bool | Closure | null $pollingInterval;
 
-    protected string|Closure|null $queueConnection = null;
+    protected string | Closure $queueConnection;
 
-    protected string|Closure|null $queueName = null;
+    protected string | Closure $queueName;
 
-    protected string|Closure|null $resource = null;
+    protected string | bool | Closure | null $resource;
 
-    protected array|Closure|null $colors = null;
+    protected array | Closure $colors;
+
+    public function __construct()
+    {
+        $this->bulkActionModel = config('queueable-bulk-actions.models.bulk_action');
+        $this->bulkActionRecordModel = config('queueable-bulk-actions.models.bulk_action_record');
+        $this->renderHook = config('queueable-bulk-actions.render_hook');
+        $this->pollingInterval = config('queueable-bulk-actions.polling_interval');
+        $this->queueConnection = config('queueable-bulk-actions.queue.connection');
+        $this->queueName = config('queueable-bulk-actions.queue.queue');
+        $this->resource = config('queueable-bulk-actions.resource');
+        $this->colors = config('queueable-bulk-actions.colors');
+    }
 
     public function getId(): string
     {
@@ -39,9 +50,15 @@ class QueueableBulkActionsPlugin implements Plugin
     public function register(Panel $panel): void
     {
         FilamentView::registerRenderHook(
-            Config::renderHook(),
-            fn(array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
+            $this->getRenderHook(),
+            fn (array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
         );
+
+        if ($this->getResource() != BulkActionResource::class) {
+            $panel->resources([
+                $this->getResource(),
+            ]);
+        }
     }
 
     public function boot(Panel $panel): void
@@ -58,67 +75,67 @@ class QueueableBulkActionsPlugin implements Plugin
         return filament(app(static::class)->getId());
     }
 
-    public function bulkActionRecordTable(string|Closure $table): static
+    public function bulkActionRecordTable(string | Closure $table): static
     {
         $this->bulkActionRecordTable = $table;
 
         return $this;
     }
 
-    public function getBulkActionRecordTable(): ?string
+    public function getBulkActionRecordTable(): string
     {
         return $this->evaluate($this->bulkActionRecordTable);
     }
 
-    public function bulkActionModel(string|Closure $model): static
+    public function bulkActionModel(string | Closure $model): static
     {
         $this->bulkActionModel = $model;
 
         return $this;
     }
 
-    public function getBulkActionModel(): ?string
+    public function getBulkActionModel(): string
     {
         return $this->evaluate($this->bulkActionModel);
     }
 
-    public function bulkActionRecordModel(string|Closure $model): static
+    public function bulkActionRecordModel(string | Closure $model): static
     {
         $this->bulkActionRecordModel = $model;
 
         return $this;
     }
 
-    public function getBulkActionRecordModel(): ?string
+    public function getBulkActionRecordModel(): string
     {
         return $this->evaluate($this->bulkActionRecordModel);
     }
 
-    public function renderHook(string|Closure $renderHook): static
+    public function renderHook(string | Closure $renderHook): static
     {
         $this->renderHook = $renderHook;
 
         return $this;
     }
 
-    public function getRenderHook(): ?string
+    public function getRenderHook(): string
     {
         return $this->evaluate($this->renderHook);
     }
 
-    public function pollingInterval(string|Closure $pollingInterval): static
+    public function pollingInterval(string | bool | Closure $pollingInterval): static
     {
         $this->pollingInterval = $pollingInterval;
 
         return $this;
     }
 
-    public function getPollingInterval(): ?string
+    public function getPollingInterval(): string | bool | null
     {
         return $this->evaluate($this->pollingInterval);
     }
 
-    public function queue(string|Closure $connection, string|Closure $queue = 'default'): static
+    public function queue(string | Closure $connection, string | Closure $queue = 'default'): static
     {
         $this->queueConnection = $connection;
         $this->queueName = $queue;
@@ -126,50 +143,50 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this;
     }
 
-    public function queueConnection(string|Closure $queueConnection): static
+    public function queueConnection(string | Closure $queueConnection): static
     {
         $this->queueConnection = $queueConnection;
 
         return $this;
     }
 
-    public function getQueueConnection(): ?string
+    public function getQueueConnection(): string
     {
         return $this->evaluate($this->queueConnection);
     }
 
-    public function queueName(string|Closure $queueName): static
+    public function queueName(string | Closure $queueName): static
     {
         $this->queueName = $queueName;
 
         return $this;
     }
 
-    public function getQueueName(): ?string
+    public function getQueueName(): string
     {
         return $this->evaluate($this->queueName);
     }
 
-    public function resource(string|Closure $resource): static
+    public function resource(string | bool | Closure $resource): static
     {
         $this->resource = $resource;
 
         return $this;
     }
 
-    public function getResource(): ?string
+    public function getResource(): string | bool | null
     {
         return $this->evaluate($this->resource);
     }
 
-    public function colors(array|Closure $colors): static
+    public function colors(array | Closure $colors): static
     {
         $this->colors = $colors;
 
         return $this;
     }
 
-    public function getColors(): ?array
+    public function getColors(): array
     {
         return $this->evaluate($this->colors);
     }

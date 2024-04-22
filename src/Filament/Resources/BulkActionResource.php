@@ -29,12 +29,12 @@ class BulkActionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                          ->label('Action ID'),
+                    ->label('Action ID'),
                 TextColumn::make('name'),
                 TextColumn::make('status')
-                          ->color(fn($state) => Config::color($state))
-                          ->badge()
-                          ->formatStateUsing(fn(StatusEnum $state) => $state->getLabel()),
+                    ->color(fn ($state) => Config::color($state))
+                    ->badge()
+                    ->formatStateUsing(fn (StatusEnum $state) => $state->getLabel()),
                 TextColumn::make('message')->wrap()->placeholder('-'),
                 TextColumn::make('total_records'),
                 TextColumn::make('started_at')->dateTime()->placeholder('-'),
@@ -48,10 +48,9 @@ class BulkActionResource extends Resource
     {
         return [
             'index' => Pages\ListBulkActions::route('/'),
-            'view'  => Pages\ViewBulkAction::route('/{record}'),
+            'view' => Pages\ViewBulkAction::route('/{record}'),
         ];
     }
-
 
     public function register(Panel $panel): void
     {
