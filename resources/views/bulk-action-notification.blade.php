@@ -32,7 +32,7 @@
                         $groupColorStyles = \Illuminate\Support\Arr::toCssStyles([
                           \Filament\Support\get_color_css_variables(
                           $groupColor,
-                          shades: [300, 600, 700],
+                          shades: [500, 600, 700],
                           ),
                         ]);
                         $status = \Bytexr\QueueableBulkActions\Enums\StatusEnum::from($status);
@@ -45,7 +45,7 @@
                             "width: " . $percentage . "%;",
                             $groupColorStyles
                          ])
-                         class="flex flex-col justify-center overflow-hidden bg-custom-600 text-xs text-white text-center whitespace-nowrap dark:bg-custom-300"
+                         class="flex flex-col justify-center overflow-hidden bg-custom-600 text-xs text-white text-center whitespace-nowrap dark:bg-custom-500"
                          role="progressbar"
                          aria-valuenow="{{ $percentage }}"
                          aria-valuemin="0"
