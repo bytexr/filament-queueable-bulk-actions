@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('identifier');
             $table->string('status')->default(StatusEnum::QUEUED->value);
             $table->string('job');
-            $table->foreignUuid('user_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('total_records')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->bigInteger('total_records')->unsigned()->nullable();
             $table->json('data')->nullable();
             $table->text('message')->nullable();
             $table->timestamp('dismissed_at')->nullable();
