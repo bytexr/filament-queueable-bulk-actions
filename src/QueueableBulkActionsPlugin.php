@@ -43,7 +43,7 @@ class QueueableBulkActionsPlugin implements Plugin
             fn(array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
         );
 
-        if (Config::resource() && Config::resource() instanceof BulkActionResource) {
+        if (Config::resource() && Config::resource() == BulkActionResource::class) {
             $panel->resources([
                 Config::resource(),
             ]);
