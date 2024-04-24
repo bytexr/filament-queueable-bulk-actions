@@ -102,7 +102,7 @@ Following that, create a `QueueableBulkAction`  and link it to the job you've ju
 
 Once set up, this will generate notifications to keep users apprised of your bulk action progress on the current page. The information remains visible until manually dismissed, providing an unintrusive user experience.
 
-![Bulk Action Notification](/resources/images/notification.png)
+![Bulk Action Notification](https://raw.githubusercontent.com/bytexr/filament-queueable-bulk-actions/main/resources/images/notification.png)
 
 The notification is contextually aware and will only appear on the page where the action was initiated by the user. This tailored approach keeps things neat and relevant. It comes with an easy dismissal feature; a simple click on 'X' will close the notification.
 
@@ -113,21 +113,21 @@ Even after the task execution, all bulk action records are preserved for referen
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](https://github.com/bytexr/filament-queueable-bulk-actions//blob/HEAD/CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/bytexr/filament-queueable-bulk-actions//blob/HEAD/.github/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Please review [our security policy](https://github.com/bytexr/filament-queueable-bulk-actions/security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
 - [Eddie Rusinskas](https://github.com/bytexr)
-- [All Contributors](../../contributors)
+- [All Contributors](https://github.com/bytexr/filament-queueable-bulk-actions/graphs/contributors)
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/bytexr/filament-queueable-bulk-actions/blob/HEAD/LICENSE.md) for more information.
