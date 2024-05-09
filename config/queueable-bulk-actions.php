@@ -33,7 +33,7 @@ return [
      * Which queue connection and queue name should be used
      */
     'queue' => [
-        'connection' => env('QUEUE_CONNECTION'),
+        'connection' => env('QUEUE_CONNECTION', 'sync'),
         'queue' => 'default',
     ],
 
