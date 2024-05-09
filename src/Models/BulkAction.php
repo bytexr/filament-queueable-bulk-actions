@@ -38,7 +38,11 @@ class BulkAction extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Config::bulkActionModel(), 'user_id');
+        $guard = config('auth.defaults.guard');
+        $provider = config('auth.guards.' . $guard . '.provider');
+        $userModel = config('auth.providers.' . $provider . '.model');
+
+        return $this->belongsTo($userModel, 'user_id');
     }
 
     public function records(): HasMany
