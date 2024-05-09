@@ -18,7 +18,7 @@ class QueueableBulkActionsPlugin implements Plugin
 
     protected string | Closure $bulkActionRecordModel;
 
-    protected string | Closure $renderHook;
+    protected string | array | Closure $renderHook;
 
     protected string | bool | Closure | null $pollingInterval;
 
@@ -49,10 +49,17 @@ class QueueableBulkActionsPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        FilamentView::registerRenderHook(
-            $this->getRenderHook(),
-            fn (array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
-        );
+        $renderHooks = $this->getRenderHooks();
+        if (! is_array($renderHooks)) {
+            $renderHooks = [$renderHooks];
+        }
+
+        foreach ($renderHooks as $renderHook) {
+            FilamentView::registerRenderHook(
+                $renderHook,
+                fn (array $scopes): string => Blade::render('@livewire(\'queueable-bulk-actions.bulk-action-notifications\', [\'identifier\' => \'' . $scopes[0] . '\'])'),
+            );
+        }
 
         if ($this->getResource() == BulkActionResource::class) {
             $panel->resources([
@@ -111,14 +118,14 @@ class QueueableBulkActionsPlugin implements Plugin
         return $this->evaluate($this->bulkActionRecordModel);
     }
 
-    public function renderHook(string | Closure $renderHook): static
+    public function renderHook(string | array | Closure $renderHook): static
     {
         $this->renderHook = $renderHook;
 
         return $this;
     }
 
-    public function getRenderHook(): string
+    public function getRenderHooks(): array | string
     {
         return $this->evaluate($this->renderHook);
     }

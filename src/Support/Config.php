@@ -31,10 +31,10 @@ class Config
         return config('queueable-bulk-actions.models.bulk_action_record');
     }
 
-    public static function renderHook(): string
+    public static function renderHooks(): string | array
     {
         if (Config::isPluginRegister()) {
-            return QueueableBulkActionsPlugin::get()->getRenderHook() ?? config('queueable-bulk-actions.render_hook');
+            return QueueableBulkActionsPlugin::get()->getRenderHooks() ?? config('queueable-bulk-actions.render_hook');
         }
 
         return config('queueable-bulk-actions.render_hook');

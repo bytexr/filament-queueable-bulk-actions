@@ -8,9 +8,9 @@ use Bytexr\QueueableBulkActions\Models\BulkAction;
 use Bytexr\QueueableBulkActions\Support\Config;
 use Closure;
 use Exception;
-use Filament\Pages\BasePage;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class QueueableBulkAction extends \Filament\Tables\Actions\BulkAction
 {
@@ -22,13 +22,13 @@ class QueueableBulkAction extends \Filament\Tables\Actions\BulkAction
 
         $this
             ->successNotificationTitle('Bulk action queued successfully')
-            ->action(function (Collection $records, QueueableBulkAction $action, array $data, BasePage $livewire) {
+            ->action(function (Collection $records, QueueableBulkAction $action, array $data, Component $livewire) {
                 if (! $action->getJob()) {
                     throw new Exception(QueueableBulkAction::class . ' requires a job to be set');
                 }
 
                 $bulkAction = $this->createBulkAction(
-                    identifier: $livewire->getRenderHookScopes()[0],
+                    identifier: $livewire::class,
                     totalRecords: $records->count(),
                     data: $data,
                 );
