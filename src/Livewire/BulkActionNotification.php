@@ -28,11 +28,14 @@ class BulkActionNotification extends Component
         $this->bulkAction = Config::bulkActionModel()::query()->findOrFail($this->bulkActionId);
         $records = $this->bulkAction->records->groupBy('status');
 
-        $this->processedPercentage = round((($records->get(StatusEnum::FINISHED->value)?->count() ?? 0) + ($records->get(StatusEnum::FAILED->value)?->count() ?? 0)) / $this->bulkAction->total_records * 100, 1);
-        $this->groupedRecords = $records->map(fn (Collection $records) => $records->count());
+        $this->processedPercentage = 100;
+        if ($this->bulkAction->total_records) {
+            $this->processedPercentage = round((($records->get(StatusEnum::FINISHED->value)?->count() ?? 0) + ($records->get(StatusEnum::FAILED->value)?->count() ?? 0)) / $this->bulkAction->total_records * 100, 1);
+        }
+        $this->groupedRecords = $records->map(fn(Collection $records) => $records->count());
     }
 
-    public function render(): Factory | Application | View | \Illuminate\View\View | \Illuminate\Contracts\Foundation\Application
+    public function render(): Factory|Application|View|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('queueable-bulk-actions::bulk-action-notification');
     }
