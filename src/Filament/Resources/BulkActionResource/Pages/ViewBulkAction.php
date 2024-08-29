@@ -32,7 +32,7 @@ class ViewBulkAction extends ListRecords
         return Config::bulkActionRecordModel();
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return $this->getRecord()->name;
     }
@@ -42,11 +42,11 @@ class ViewBulkAction extends ListRecords
         return $table
             ->columns([
                 TextColumn::make('record')
-                    ->getStateUsing(fn (BulkActionRecord $record) => $record->record->name ?? $record->record_id),
+                          ->getStateUsing(fn(BulkActionRecord $record) => $record->record->name ?? $record->record_id),
                 TextColumn::make('status')
-                    ->color(fn ($state) => Config::color($state))
-                    ->badge()
-                    ->formatStateUsing(fn (StatusEnum $state) => $state->getLabel()),
+                          ->color(fn($state) => Config::color($state))
+                          ->badge()
+                          ->formatStateUsing(fn(StatusEnum $state) => $state->getLabel()),
                 TextColumn::make('message')->wrap()->placeholder('-'),
                 TextColumn::make('started_at')->dateTime()->placeholder('-'),
                 TextColumn::make('failed_at')->dateTime()->placeholder('-'),
@@ -54,28 +54,29 @@ class ViewBulkAction extends ListRecords
             ])
             ->actions([
                 Action::make('retry')
-                    ->icon('heroicon-o-arrow-path')
-                    ->iconButton()
-                    ->tooltip('Retry')
-                    ->color('warning')
-                    ->requiresConfirmation()
-                    ->action(function (BulkActionRecord $record) {
-                        $record->status = StatusEnum::QUEUED;
-                        $record->started_at = null;
-                        $record->failed_at = null;
-                        $record->save();
-                        $this->record->job::dispatch($record);
-                    })
-                    ->visible(fn (BulkActionRecord $record) => $record->status == StatusEnum::FAILED),
-            ]);
+                      ->icon('heroicon-o-arrow-path')
+                      ->iconButton()
+                      ->tooltip('Retry')
+                      ->color('warning')
+                      ->requiresConfirmation()
+                      ->action(function (BulkActionRecord $record) {
+                          $record->status = StatusEnum::QUEUED;
+                          $record->started_at = null;
+                          $record->failed_at = null;
+                          $record->save();
+                          $this->record->job::dispatch($record);
+                      })
+                      ->visible(fn(BulkActionRecord $record) => $record->status == StatusEnum::FAILED),
+            ])
+            ->recordUrl(null);
     }
 
     protected function getTableQuery(): Builder
     {
         return Config::bulkActionRecordModel()::query()
-            ->with(['record'])
-            ->where('bulk_action_id', $this->record->getKey())
-            ->orderBy('status');
+                     ->with(['record'])
+                     ->where('bulk_action_id', $this->record->getKey())
+                     ->orderBy('status');
     }
 
     protected function getHeaderActions(): array
