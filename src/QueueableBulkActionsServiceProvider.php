@@ -71,15 +71,6 @@ class QueueableBulkActionsServiceProvider extends PackageServiceProvider
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/queueable-bulk-actions/{$file->getFilename()}"),
-                ], 'queueable-bulk-actions-stubs');
-            }
-        }
-
         Livewire::component('queueable-bulk-actions.bulk-action-notifications', BulkActionNotifications::class);
         Livewire::component('queueable-bulk-actions.bulk-action-notification', BulkActionNotification::class);
     }
