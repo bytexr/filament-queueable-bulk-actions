@@ -9,8 +9,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Lazy;
 use Livewire\Component;
 
+#[Lazy]
 class BulkActionNotifications extends Component
 {
     public Collection $bulkActions;

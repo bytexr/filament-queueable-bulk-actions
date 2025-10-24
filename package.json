@@ -2,26 +2,19 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev:styles": "npx tailwindcss -i resources/css/index.css -o resources/dist/queueable-bulk-actions.css --postcss --watch",
+        "dev:styles": "npx @tailwindcss/cli -i resources/css/index.css -o resources/dist/queueable-bulk-actions.css --watch",
         "dev:scripts": "node bin/build.js --dev",
-        "build:styles": "npx tailwindcss -i resources/css/index.css -o resources/dist/queueable-bulk-actions.css --postcss --minify && npm run purge",
-        "build:scripts": "node bin/build.js",
-        "purge": "filament-purge -i resources/dist/queueable-bulk-actions.css -o resources/dist/queueable-bulk-actions.css -v 3.x",
-        "dev": "npm-run-all --parallel dev:*",
-        "build": "npm-run-all build:*"
+        "build:styles": "npx @tailwindcss/cli -i resources/css/index.css -o resources/dist/queueable-bulk-actions.css --minify",
+        "build:scripts": "node bin/build.js"
     },
     "devDependencies": {
-        "@awcodes/filament-plugin-purge": "^1.1.1",
-        "@tailwindcss/forms": "^0.5.4",
-        "@tailwindcss/typography": "^0.5.9",
         "autoprefixer": "^10.4.14",
         "esbuild": "^0.19.2",
-        "laravel-vite-plugin": "^1.0.2",
-        "npm-run-all": "^4.1.5",
-        "postcss": "^8.4.26",
-        "postcss-import": "^15.1.0",
-        "prettier": "^2.7.1",
-        "prettier-plugin-tailwindcss": "^0.1.13",
-        "tailwindcss": "^3.3.3"
+        "prettier": "^3.0",
+        "prettier-plugin-tailwindcss": "^0.7",
+        "tailwindcss": "^4.1.16"
+    },
+    "dependencies": {
+        "@tailwindcss/cli": "^4.1.16"
     }
 }

@@ -1,31 +1,36 @@
+@php
+    use Bytexr\QueueableBulkActions\Views\Components\BulkNotificationComponent;
+    use Illuminate\View\ComponentAttributeBag;
+
+    $color = \Bytexr\QueueableBulkActions\Support\Config::color($bulkAction->status);
+@endphp
+
 <div @class([
-        'mb-4',
         'hidden' => $bulkAction->dismissed_at && !$isViewBulkActionPage
 ])
-        {{ \Bytexr\QueueableBulkActions\Support\Config::pollingInterval() ? 'wire:poll.' . \Bytexr\QueueableBulkActions\Support\Config::pollingInterval(): '' }}
+    {{ \Bytexr\QueueableBulkActions\Support\Config::pollingInterval() ? 'wire:poll.' . \Bytexr\QueueableBulkActions\Support\Config::pollingInterval(): '' }}
 >
-    @php
-        $color = \Bytexr\QueueableBulkActions\Support\Config::color($bulkAction->status);
-        $colorStyles = \Illuminate\Support\Arr::toCssStyles([
-              \Filament\Support\get_color_css_variables(
-              $color,
-              shades: [200, 700],
-          ),
-        ]);
-    @endphp
-    <div style="{{ $colorStyles }}"
-         class="p-6 w-full shadow rounded flex bg-custom-200 dark:bg-custom-700">
-        <div class="w-2/3 flex-initial">
-            <span style="{{ $colorStyles }}"
-                  class="text-md font-semibold block text-custom-700 dark:text-white"
-            >
+    <div
+        {{
+            (new ComponentAttributeBag)
+                ->class([
+                    "p-6 w-full grid grid-cols-3 gap-3 border-gray-200 dark:border-white/10",
+                    "border-b" => !$isViewBulkActionPage,
+                    "border bg-white rounded-xl" => $isViewBulkActionPage,
+                ])
+                ->color(BulkNotificationComponent::class, 'danger')
+        }}
+    >
+        <div class="col-span-2 flex flex-col gap-2">
+            <span class="font-semibold text-color-700 dark:text-color-200">
                 @lang('queueable-bulk-actions::notification.bulk_action_status', ['name' => $bulkAction->name, 'status' => $bulkAction->status->getLabel()->lower()])
             </span>
-            <div class="py-2">
+            <div>
                 <span class="text-2xl font-semibold">{{ $processedPercentage }}%</span>
-                <span class="text-gray-500 dark:text-white text-sm pl-2">@lang('queueable-bulk-actions::notification.complete')</span>
+                <span
+                    class="text-gray-600 dark:text-gray-400 text-sm pl-2">@lang('queueable-bulk-actions::notification.complete')</span>
             </div>
-            <div class="flex w-full h-3 bg-white rounded-full overflow-hidden">
+            <div class="flex w-full h-4  border border-gray-200 dark:border-white/10 rounded-full overflow-hidden">
                 @foreach($groupedRecords as $status => $count)
                     @php
                         $groupColor = \Bytexr\QueueableBulkActions\Support\Config::color($status);
@@ -45,7 +50,7 @@
                             "width: " . $percentage . "%;",
                             $groupColorStyles
                          ])
-                         class="flex flex-col justify-center overflow-hidden bg-custom-600 text-xs text-white text-center whitespace-nowrap dark:bg-custom-500"
+                         class="flex flex-col justify-center overflow-hidden bg-color-600 text-xs text-white text-center whitespace-nowrap dark:bg-color-500"
                          role="progressbar"
                          aria-valuenow="{{ $percentage }}"
                          aria-valuemin="0"
@@ -53,7 +58,7 @@
                 @endforeach
             </div>
             <div class="flex justify-between">
-                <span class="text-gray-500 dark:text-white text-xs pt-1">
+                <span class="text-gray-700 dark:text-white text-xs pt-1">
                     {{ $bulkAction->status->getLabel() }}
                     {{
                         match ($bulkAction->status) {
@@ -70,12 +75,11 @@
                 @endif
             </div>
         </div>
-        <div class="w-1/3 flex-initial align-middle flex justify-end items-center">
+        <div class="align-middle flex justify-end items-center">
             @if(!$isViewBulkActionPage)
-                <x-heroicon-o-x-mark x-tooltip="'@lang('queueable-bulk-actions::notification.dismiss')'"
+                <x-heroicon-o-x-mark x-tooltip.raw="@lang('queueable-bulk-actions::notification.dismiss')"
                                      wire:click="dismiss"
-                                     styles="{{ $colorStyles }}"
-                                     class="h-8 cursor-pointer text-custom-700 dark:text-white"
+                                     class="size-8 cursor-pointer text-gray-950 dark:text-white"
                 />
             @endif
         </div>
