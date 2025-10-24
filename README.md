@@ -10,8 +10,14 @@ This Filament plugin simplifies managing bulk operations asynchronously in a que
 
 You can install the package via composer:
 
+Filament 4
 ```bash
-composer require bytexr/filament-queueable-bulk-actions
+composer require bytexr/filament-queueable-bulk-actions "^4.0"
+```
+
+Filament 3
+```bash
+composer require bytexr/filament-queueable-bulk-actions "^3.0"
 ```
 
 You can publish and run the migrations with:
@@ -50,7 +56,7 @@ public function panel(Panel $panel): Panel
             QueueableBulkActionsPlugin::make()
                 ->bulkActionModel(YourBulkActionModel::class) // (optional) - Allows you to register your own model which extends \Bytexr\QueueableBulkActions\Models\BulkAction
                 ->bulkActionRecordModel(YourBulkActionRecordModel::class) // (optional) - Allows you to register your own model for records which extends \Bytexr\QueueableBulkActions\Models\BulkActionRecord
-                ->renderHook(PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE) // (optional) - Allows you to change where notification is rendered, multiple render hooks can be passed as array [Default: PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE]
+                ->renderHook(TablesRenderHook::HEADER_BEFORE) // (optional) - Allows you to change where notification is rendered, multiple render hooks can be passed as array [Default: PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE]
                 ->pollingInterval('5s') // (optional) - Allows you to change or disable polling interval, set to null to disable. [Default: 5s]
                 ->queue('redis', 'default')  // (optional) - Allows you to change which connection and queue should be used [Default: env('QUEUE_CONNECTION'), default]
                 ->resource(YourBulkActionResource::class) // (optional) - Allows you to change which resource should be used to display historical bulk actions
