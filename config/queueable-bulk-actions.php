@@ -20,9 +20,9 @@ return [
     /**
      * Where to render notification components.
      *
-     * More information: https://filamentphp.com/docs/3.x/support/render-hooks
+     * More information: https://filamentphp.com/docs/4.x/advanced/render-hooks
      */
-    'render_hook' => Filament\View\PanelsRenderHook::RESOURCE_PAGES_LIST_RECORDS_TABLE_BEFORE,
+    'render_hook' => Filament\Tables\View\TablesRenderHook::TOOLBAR_BEFORE,
 
     /**
      * How often notification component will be polled, set to null if don't want to poll
