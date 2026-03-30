@@ -16,7 +16,7 @@
                 ->class([
                     "p-6 w-full grid grid-cols-3 gap-3 border-gray-200 dark:border-white/10",
                     "border-b" => !$isViewBulkActionPage,
-                    "border bg-white rounded-xl" => $isViewBulkActionPage,
+                    "border rounded-xl dark:bg-gray-900" => $isViewBulkActionPage,
                 ])
                 ->color(BulkNotificationComponent::class, 'danger')
         }}
