@@ -10,6 +10,11 @@ This Filament plugin simplifies managing bulk operations asynchronously in a que
 
 You can install the package via composer:
 
+Filament 5
+```bash
+composer require bytexr/filament-queueable-bulk-actions "^5.0"
+```
+
 Filament 4
 ```bash
 composer require bytexr/filament-queueable-bulk-actions "^4.0"
